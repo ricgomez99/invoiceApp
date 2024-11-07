@@ -1,0 +1,28 @@
+services:
+  client:
+    build:
+      context: ./Invoices-App-Client
+      dockerfile: Dockerfile.prod
+      args:
+        VITE_BASE_URL: http://localhost:3000
+    ports:
+      - 80:80
+    # environment:
+    #   VITE_BASE_URL: http://localhost:3000
+    volumes:
+      - ./Invoices-App-Client/src:/app/src
+  api:
+    build: ./Invoices-App-API
+    ports:
+      - 3000:3000
+    environment:
+      ACCESS_TOKEN: 4e0b86f5b061482da161c5fc73650deb2ee567143393655c8b84d0f02be7e886d562ba3c9f36a2ed17e742341a86e13ff2dccc2f2d882f1c1df35af702b7ad66
+      REFRESH_TOKEN: 37bd8cdb053cb8ba4f9f80b856c850fba2f05cc49961fda1ae1628d775eed5bf7183f6311856d8fb26c236ca157319ce203e660918cda5f2e4cd5426bfeb0b86
+      DB_NAME: bgy3z8awykqwsa1hm32e
+      DB_USER: usxq6cfg83kanhcl
+      DB_PASSWORD: VsAkZTFjLfIW33ypC8lo
+      DB_HOST: bgy3z8awykqwsa1hm32e-mysql.services.clever-cloud.com
+      DB_PORT: 3306
+      DB_URL: mysql://usxq6cfg83kanhcl:VsAkZTFjLfIW33ypC8lo@bgy3z8awykqwsa1hm32e-mysql.services.clever-cloud.com:3306/bgy3z8awykqwsa1hm32e
+    volumes:
+      - ./Invoices-App-API/src:/app/api/src
