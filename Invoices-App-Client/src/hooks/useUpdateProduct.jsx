@@ -8,7 +8,6 @@ export default function useUpdateProduct() {
   const update = async (updateQuery) => {
     try {
       if (updateQuery) {
-        console.log('query:', updateQuery)
         const { id, quantity } = updateQuery
         return await updateProduct({ authToken, id, quantity })
       }

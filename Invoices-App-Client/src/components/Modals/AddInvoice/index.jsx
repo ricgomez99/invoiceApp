@@ -8,22 +8,20 @@ import {
 } from '@material-tailwind/react'
 
 import { useRef, useState, useCallback, useEffect } from 'react'
-import { createInvoice } from '../../../utils/invoices'
-import { useAuth } from '../../../hooks/useAuth'
 import useUpdateProduct from '../../../hooks/useUpdateProduct'
 import InputField from '../../Forms/Input'
 import SelectField from '../../Forms/Select'
 import { useForm } from 'react-hook-form'
 import calculateTotal from '../../../utils/calculateTotal'
 import Quantity from '../../Quantity/Quantity'
+import useCreateInvoice from '../../../hooks/useCreteInvoice'
 
 export default function AddInvoice({ open, handler, products, users }) {
   const { register, handleSubmit, reset, watch } = useForm()
   const [counter, setCounter] = useState(0)
   const [total, setTotal] = useState()
-  const { getAccessToken } = useAuth()
-  const authToken = getAccessToken()
   const updateQuantity = useUpdateProduct()
+  const createInvoice = useCreateInvoice()
 
   const quantity = useRef(0)
 
@@ -51,25 +49,17 @@ export default function AddInvoice({ open, handler, products, users }) {
       const invoiceData = { ...data, total }
       invoiceData.subtotal = Number(invoiceData.subtotal)
       invoiceData.discount = Number(invoiceData.discount)
-      console.log(invoiceData)
-      // const response = await createInvoice({ authToken, invoiceData })
+      createInvoice(invoiceData)
+      updateQuantity({
+        quantity: invoiceData.quantity,
+        id: invoiceData.productId,
+      })
     } catch (error) {
       console.log(error)
     } finally {
       resetState()
+      handler(() => false)
     }
-
-    //   const updateQuery = {
-    //     quantity: counter,
-    //     id,
-    //   }
-    //   if (!response) return null
-    //   updateQuantity(updateQuery)
-    //   resetState()
-    //   handler(() => false)
-    // } catch (error) {
-    //   console.log(error)
-    // }
   })
 
   const removeButtonClass =
@@ -79,7 +69,7 @@ export default function AddInvoice({ open, handler, products, users }) {
 
   return (
     <>
-      <Dialog size="xs" open={open} handler={handler} className="bg-white">
+      <Dialog size="sm" open={open} handler={handler} className="bg-white">
         <DialogBody className="flex justify-center">
           <Card className="w-full" shadow={false}>
             <CardBody className="w-full flex flex-col">
