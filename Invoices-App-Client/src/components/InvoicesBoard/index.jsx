@@ -1,9 +1,9 @@
 import useInvoices from '../../hooks/useInvoices'
 import Pagination from '../Pagination'
-import { useState } from 'react'
+import { useState, memo } from 'react'
 import InvoiceCard from '../InvoiceCard'
 
-export default function InvoicesBoard() {
+export default memo(function InvoicesBoard() {
   const tableHead = [
     'Invoice',
     'Client',
@@ -24,12 +24,12 @@ export default function InvoicesBoard() {
   const pageChange = (pageNumber) => setCurrentPage(pageNumber)
 
   return (
-    <section className="w-full h-full flex flex-col gap-6">
-      <div className="bg-[#1114] w-full h-11 rounded-md items-center flex flex-row justify-between px-2">
+    <section className="w-full flex flex-col gap-6">
+      <div className="bg-[#25252544] w-full py-3 px-6 rounded-lg items-center flex flex-row justify-between">
         {tableHead &&
           tableHead.map((title) => (
             <span
-              className="text-white font-semibold text-base text-center min-w-16"
+              className="text-white font-semibold text-lg text-center min-w-16"
               key={title}
             >
               {title}
@@ -37,19 +37,21 @@ export default function InvoicesBoard() {
           ))}
       </div>
       <aside>
-        {currentInvoices
-          ? currentInvoices.map((invoice) => (
-              <InvoiceCard
-                id={invoice.id}
-                date={invoice.date}
-                discount={invoice.discount}
-                subtotal={invoice.subtotal}
-                total={invoice.total}
-                userId={invoice.userId}
-                key={invoice.id}
-              />
-            ))
-          : null}
+        <div className="flex flex-col justify-center gap-3">
+          {currentInvoices
+            ? currentInvoices.map((invoice) => (
+                <InvoiceCard
+                  id={invoice.id}
+                  date={invoice.date}
+                  discount={invoice.discount}
+                  subtotal={invoice.subtotal}
+                  total={invoice.total}
+                  userId={invoice.userId}
+                  key={invoice.id}
+                />
+              ))
+            : null}
+        </div>
         {invoices ? (
           <div className="flex justify-center items-center py-5">
             <Pagination
@@ -62,4 +64,4 @@ export default function InvoicesBoard() {
       </aside>
     </section>
   )
-}
+})

@@ -1,11 +1,10 @@
-import { Button } from '@material-tailwind/react'
 import InvoicesBoard from './../InvoicesBoard/index'
 import { useState, useCallback } from 'react'
 import AddInvoice from '../Modals/AddInvoice'
-import { GrAdd } from 'react-icons/gr'
 import useProducts from './../../hooks/useProducts'
 import useUsers from '../../hooks/useUsers'
 import { CreateProductsModal } from '../Modals/CreateProductsModal/index'
+import InvoiceButton from '../InvoiceButton/InvoiceButton'
 
 export default function AdminDashboard() {
   const [open, setIsOpen] = useState(false)
@@ -20,40 +19,33 @@ export default function AdminDashboard() {
 
   return (
     <>
-      <div className="w-full h-auto bg-[#f9f9f9] p-6 rounded-lg max-w-[1366px] flex flex-col justify-center items-center">
-        <div className="w-full flex flex-row self-start items-start justify-between gap-2">
-          <Button
-            size="lg"
-            className="my-3 self-start flex items-center gap-3 cursor-pointer"
-            onClick={handleOpenForm}
-          >
-            <GrAdd color="#fff" className="w-4 h-4" />
-            Add Invoice
-          </Button>
-          <Button
-            size="lg"
-            className="my-3 self-start flex items-center gap-3 cursor-pointer"
-            onClick={handleOpenProductForm}
-          >
-            Create Product
-          </Button>
+      <div className="w-full bg-[#F5F5F5] p-6 rounded-lg max-w-[1366px] flex flex-col justify-center items-center">
+        <div className="w-full flex flex-col items-start pb-3">
+          <div className="flex flex-row justify-center gap-6">
+            <InvoiceButton onClick={handleOpenForm}>
+              Create invoice
+            </InvoiceButton>
+            <InvoiceButton onClick={handleOpenProductForm}>
+              Create product
+            </InvoiceButton>
+          </div>
         </div>
         <InvoicesBoard />
       </div>
-      {open ? (
+      {open && (
         <AddInvoice
           open={open}
           handler={handleOpenForm}
           products={products}
           users={users}
         />
-      ) : null}
-      {openProductsForm ? (
+      )}
+      {openProductsForm && (
         <CreateProductsModal
           open={openProductsForm}
           handler={handleOpenProductForm}
         />
-      ) : null}
+      )}
     </>
   )
 }
