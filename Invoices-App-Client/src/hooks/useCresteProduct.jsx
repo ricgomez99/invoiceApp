@@ -7,7 +7,6 @@ export default function useCreateProduct() {
 
   const create = async (data) => {
     try {
-      console.log('data', data)
       await createProduct({ data, authToken })
     } catch (error) {
       if (error instanceof Error) {
