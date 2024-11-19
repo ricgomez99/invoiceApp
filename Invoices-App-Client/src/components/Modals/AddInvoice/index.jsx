@@ -21,7 +21,7 @@ export default function AddInvoice({ open, handler, products, users }) {
   const [counter, setCounter] = useState(0)
   const [total, setTotal] = useState()
   const updateQuantity = useUpdateProduct()
-  const createInvoice = useCreateInvoice()
+  const { addInvoice } = useCreateInvoice()
 
   const quantity = useRef(0)
 
@@ -46,10 +46,22 @@ export default function AddInvoice({ open, handler, products, users }) {
 
   const onSubmit = handleSubmit(async (data) => {
     try {
-      const invoiceData = { ...data, total }
-      invoiceData.subtotal = Number(invoiceData.subtotal)
-      invoiceData.discount = Number(invoiceData.discount)
-      createInvoice(invoiceData)
+      const subtotal = Number(data.subtotal)
+      const discount = Number(data.discount)
+
+      const invoiceData = {
+        userId: data.userId,
+        invoice: {
+          date: data.date,
+          discount,
+          subtotal,
+          total,
+        },
+        productIds: [data.productId],
+      }
+
+      console.log('invoice data: ', invoiceData)
+      await addInvoice(invoiceData)
       updateQuantity({
         quantity: invoiceData.quantity,
         id: invoiceData.productId,

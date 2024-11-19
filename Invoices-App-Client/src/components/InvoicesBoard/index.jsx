@@ -1,7 +1,7 @@
-import useInvoices from '../../hooks/useInvoices'
 import Pagination from '../Pagination'
 import { useState, memo } from 'react'
 import InvoiceCard from '../InvoiceCard'
+import useInvoiceQuery from '../../hooks/useInvoiceQuery'
 
 export default memo(function InvoicesBoard() {
   const tableHead = [
@@ -12,7 +12,7 @@ export default memo(function InvoicesBoard() {
     'Discount',
     'Total',
   ]
-  const invoices = useInvoices()
+  const { invoices } = useInvoiceQuery()
   const [currentPage, setCurrentPage] = useState(1)
 
   // eslint-disable-next-line no-unused-vars

@@ -24,6 +24,7 @@ export const getInvoices = async (authToken) => {
 
 export const createInvoice = async ({ authToken, invoiceData }) => {
   try {
+    console.log('re-body: ', invoiceData)
     const { data } = await axios.post(`${url}/invoices`, invoiceData, {
       headers: {
         'Content-Type': 'application/json',
@@ -32,6 +33,7 @@ export const createInvoice = async ({ authToken, invoiceData }) => {
     })
 
     if (!data) return null
+    console.log('req-data', data)
     return data
   } catch (error) {
     if (error instanceof AxiosError) {
