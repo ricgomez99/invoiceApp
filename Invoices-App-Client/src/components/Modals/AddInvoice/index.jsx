@@ -20,7 +20,7 @@ export default function AddInvoice({ open, handler, products, users }) {
   const { register, handleSubmit, reset, watch } = useForm()
   const [counter, setCounter] = useState(0)
   const [total, setTotal] = useState()
-  const updateQuantity = useUpdateProduct()
+  const { updateProducts } = useUpdateProduct()
   const { addInvoice } = useCreateInvoice()
 
   const quantity = useRef(0)
@@ -60,9 +60,8 @@ export default function AddInvoice({ open, handler, products, users }) {
         productIds: [data.productId],
       }
 
-      console.log('invoice data: ', invoiceData)
       await addInvoice(invoiceData)
-      updateQuantity({
+      updateProducts({
         quantity: invoiceData.quantity,
         id: invoiceData.productId,
       })

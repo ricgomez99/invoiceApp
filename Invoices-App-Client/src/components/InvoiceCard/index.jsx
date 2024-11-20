@@ -14,7 +14,7 @@ export default memo(function InvoiceCard({
   const dateFormated = date?.replaceAll('-', '/').split('T')[0]
   const spanStyles = 'font-semibold text-sm text-[#1E201E] min-w-16'
 
-  const users = useUsers()
+  const { users } = useUsers()
   const user = users && users.find((user) => user.id === userId)
   return (
     <>

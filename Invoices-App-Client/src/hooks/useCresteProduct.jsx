@@ -1,18 +1,16 @@
 import { createProduct } from '../utils/products'
 import { useAuth } from './useAuth'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 
 export default function useCreateProduct() {
   const { getAccessToken } = useAuth()
   const authToken = getAccessToken()
+  const queryClient = useQueryClient()
 
-  const create = async (data) => {
-    try {
-      await createProduct({ data, authToken })
-    } catch (error) {
-      if (error instanceof Error) {
-        console.log(error.message)
-      }
-    }
-  }
-  return create
+  const { mutateAsync: addProduct } = useMutation({
+    mutationFn: async (data) => await createProduct({ data, authToken }),
+    onSuccess: () => queryClient.invalidateQueries(['products']),
+  })
+
+  return { addProduct }
 }

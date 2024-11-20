@@ -1,22 +1,20 @@
 import { updateProduct } from '../utils/products'
 import { useAuth } from './useAuth'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 
 export default function useUpdateProduct() {
   const { getAccessToken } = useAuth()
   const authToken = getAccessToken()
+  const queryClient = useQueryClient()
 
-  const update = async (updateQuery) => {
-    try {
-      if (updateQuery) {
-        const { id, quantity } = updateQuery
-        return await updateProduct({ authToken, id, quantity })
-      }
+  const { mutateAsync: updateProducts } = useMutation({
+    mutationFn: async (updateQuery) => {
+      const { id, quantity } = updateQuery
+      return await updateProduct({ authToken, id, quantity })
+    },
 
-      return null
-    } catch (error) {
-      console.log(error)
-    }
-  }
+    onSuccess: () => queryClient.invalidateQueries(['products']),
+  })
 
-  return update
+  return { updateProducts }
 }
