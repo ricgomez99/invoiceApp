@@ -1,26 +1,16 @@
-import { useState, useEffect } from 'react'
 import { useAuth } from './useAuth'
 import { getProducts } from '../utils/products'
+import { useQuery } from '@tanstack/react-query'
 
 export default function useProducts() {
-  const [products, setProducts] = useState(null)
   const { getAccessToken } = useAuth()
   const authToken = getAccessToken()
 
-  const fetchProducts = async () => {
-    try {
-      const result = await getProducts(authToken)
-      if (!result) return null
+  const { data: products = [], isLoading } = useQuery({
+    // eslint-disable-next-line @tanstack/query/exhaustive-deps
+    queryKey: ['products'],
+    queryFn: () => getProducts(authToken),
+  })
 
-      setProducts(result)
-    } catch (error) {
-      console.log(error)
-    }
-  }
-
-  useEffect(() => {
-    fetchProducts()
-  }, [])
-
-  return products
+  return { products, isLoading }
 }

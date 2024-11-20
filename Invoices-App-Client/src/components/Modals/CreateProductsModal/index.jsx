@@ -8,10 +8,10 @@ import Button from '../../Button'
 
 export function CreateProductsModal({ handler, open }) {
   const { register, handleSubmit, reset } = useForm()
-  const create = useCreateProduct()
+  const { addProduct } = useCreateProduct()
 
   const onSubmit = handleSubmit(async (data) => {
-    create(data)
+    await addProduct(data)
     handler(() => false)
     reset()
   })

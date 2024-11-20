@@ -14,8 +14,8 @@ export default function AdminDashboard() {
     () => setOpenProductsForm(!openProductsForm),
     [openProductsForm]
   )
-  const users = useUsers()
-  const products = useProducts()
+  const { users } = useUsers()
+  const { products } = useProducts()
 
   return (
     <>

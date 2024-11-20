@@ -1,21 +1,11 @@
-import { useState, useEffect } from 'react'
 import { getUsers } from '../utils/users'
+import { useQuery } from '@tanstack/react-query'
 
 export default function useUsers() {
-  const [allUsers, setAllUsers] = useState(null)
-  const fetchUsers = async () => {
-    try {
-      const users = await getUsers()
-      if (!users) return null
-      setAllUsers(users)
-    } catch (error) {
-      console.log(error)
-    }
-  }
+  const { data: users, isLoading } = useQuery({
+    queryKey: ['users'],
+    queryFn: () => getUsers(),
+  })
 
-  useEffect(() => {
-    fetchUsers()
-  }, [])
-
-  return allUsers
+  return { users, isLoading }
 }
