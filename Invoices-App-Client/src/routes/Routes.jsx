@@ -5,6 +5,7 @@ import Home from '../pages/Home'
 import Login from '../pages/Login'
 import Register from '../pages/Register'
 import Dashboard from '../pages/Dashboard'
+import InvoiceDetails from '../pages/InvoiceDetails'
 
 export default function Routes() {
   const routes = createBrowserRouter([
@@ -31,6 +32,11 @@ export default function Routes() {
         {
           path: `/dashboard`,
           element: <Dashboard />,
+        },
+
+        {
+          path: '/invoice-details/:invoiceId',
+          element: <InvoiceDetails />,
         },
       ],
     },
