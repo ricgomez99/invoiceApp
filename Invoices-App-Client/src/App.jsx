@@ -1,4 +1,3 @@
-import './App.css'
 import { RouterProvider } from 'react-router-dom'
 import Routes from './routes/Routes'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
@@ -10,9 +9,9 @@ function App() {
   return (
     <>
       <QueryClientProvider client={queryClient}>
-        <div className="flex w-[100%] h-[100%] justify-center align-middle">
+        <main className="w-full h-dvh">
           <RouterProvider router={routes} />
-        </div>
+        </main>
       </QueryClientProvider>
     </>
   )
