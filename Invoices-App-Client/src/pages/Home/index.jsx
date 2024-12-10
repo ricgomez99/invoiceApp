@@ -4,6 +4,8 @@ import { useCallback } from 'react'
 import { useNavigate } from 'react-router-dom'
 import SimpleCard from '../../components/SimpleCard'
 import { landingCards } from '../../lib/landingCards'
+import InfoCard from '../../components/InfoCard'
+import { infoCardData } from '../../lib/infoCardsData'
 
 export default function Home() {
   const goTo = useNavigate()
@@ -33,7 +35,7 @@ export default function Home() {
             </Button>
           </div>
           <img
-            src="public/illustration.png"
+            src="/illustration.png"
             alt="woman working on her invoices"
             className="mt-6 max-w-full lg:mt-0 lg:max-w-lg"
           />
@@ -50,7 +52,7 @@ export default function Home() {
           them in your invoices.
         </p>
         <img
-          src="public/innovate2.png"
+          src="/innovate2.png"
           alt="a man having success with his invoices"
           className="max-w-full aspect-square object-cover rounded-xl pt-5 shadow-md lg:max-w-md"
         />
@@ -63,6 +65,20 @@ export default function Home() {
                 key={card.id}
                 title={card.title}
                 description={card.description}
+              />
+            ))}
+        </div>
+      </article>
+      <article className="flex flex-col bg-white px-3 w-full justify-center items-center">
+        <div className="flex flex-col py-4 justify-center gap-4 lg:gap-10 lg:max-w-7xl lg:py-20">
+          {infoCardData &&
+            infoCardData.map((card) => (
+              <InfoCard
+                key={card.id}
+                description={card.description}
+                direction={card.direction}
+                imageUrl={card.imageUrl}
+                altText={card.altText}
               />
             ))}
         </div>
