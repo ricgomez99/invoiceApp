@@ -11,13 +11,13 @@ export default function InfoCard({
         direction === 'left' ? 'flex-row' : 'flex-row-reverse'
       }`}
     >
-      <p className="font-lato font-normal text-xs text-[#616161]">
+      <p className="font-lato font-normal text-sm text-[#616161]">
         {description}
       </p>
       <img
         src={imageUrl}
         alt={altText}
-        className="rounded-full object-contain max-w-32 aspect-square"
+        className="rounded-full object-contain max-w-32 lg:max-w-40 aspect-square"
       />
     </div>
   )
