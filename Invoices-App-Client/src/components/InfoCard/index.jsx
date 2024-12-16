@@ -4,7 +4,6 @@ export default function InfoCard({
   direction,
   altText,
 }) {
-  console.log(direction)
   return (
     <div
       className={`flex p-3 max-w-lg justify-around items-center rounded-xl shadow-xl gap-5 ${

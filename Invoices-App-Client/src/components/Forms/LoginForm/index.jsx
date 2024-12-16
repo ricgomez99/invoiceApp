@@ -1,7 +1,7 @@
 import { signInUser } from '../../../lib/helpers'
 import { useAuth } from '../../../hooks/useAuth'
-import { useNavigate } from 'react-router-dom'
-import { Card, Button } from '@material-tailwind/react'
+import { Link, useNavigate } from 'react-router-dom'
+import { Card, Button, CardBody } from '@material-tailwind/react'
 import InputField from './../Input/index'
 import { useForm } from 'react-hook-form'
 import { password, email } from '../validations/formValidations.js'
@@ -39,45 +39,54 @@ export default function LoginForm() {
   return (
     <Card
       color="white"
-      shadow={true}
-      className="text-left p-4 w-80 max-w-[450px] min-w-64 h-auto max-h-96 min-h-60 flex justify-center"
+      className="w-full p-4 max-w-md flex justify-between shadow-lg text-center"
     >
-      <img
-        className="w-[100%] h-[50px] object-contain"
-        alt="AIMED EDGE LOGO"
-        src="https://aimedgeapps.com/wp-content/uploads/2021/12/Captura-de-pantalla-2021-12-15-131916.jpg"
-      />
-
-      <form
-        className="my-3 w-[100%] max-w-[450px] min-w-64"
-        onSubmit={onSubmit}
-      >
-        <div className="mb-1 w-[100%] flex flex-col gap-4">
-          <InputField
-            name="email"
-            placeholder="Email"
-            title="Email"
-            type="email"
-            register={register}
-            validation={email}
-          />
-          {errors.email && <InputError message={errors.email.message} />}
-          <InputField
-            name="password"
-            placeholder="Password"
-            title="Password"
-            type="password"
-            register={register}
-            validation={password}
-          />
-          {errors.password && <InputError message={errors.password.message} />}
-        </div>
-        <div className="flex justify-center items-center mt-5">
-          <Button type="submit" className="w-[100%]">
-            Sign in
-          </Button>
-        </div>
-      </form>
+      <CardBody className="p-0">
+        <h2 className="font-lato font-bold text-3xl text-gray-800">Login</h2>
+        <p className="font-lato font-normal text-sm text-[#616161] py-3">
+          Hello 👋, welcome back!
+        </p>
+        <form className="py-3" onSubmit={onSubmit}>
+          <div className="mb-1 w-[100%] flex flex-col gap-4">
+            <InputField
+              name="email"
+              placeholder="Email"
+              label="email"
+              title="Email"
+              type="email"
+              register={register}
+              validation={email}
+            />
+            {errors.email && <InputError message={errors.email.message} />}
+            <InputField
+              name="password"
+              placeholder="Password"
+              label="Password"
+              title="Password"
+              type="password"
+              register={register}
+              validation={password}
+            />
+            {errors.password && (
+              <InputError message={errors.password.message} />
+            )}
+          </div>
+          <div className="flex justify-center items-center mt-5">
+            <Button type="submit" className="w-full">
+              Sign in
+            </Button>
+          </div>
+        </form>
+        <span className="font-lato font-normal text-sm text-[#616161] py-3">
+          Don not have an account yet?{' '}
+          <Link
+            to="/register"
+            className="text-blue-400 cursor-pointer transition-all duration-300 ease-in-out hover:text-blue-200 hover:animate-pulse"
+          >
+            Register here
+          </Link>
+        </span>
+      </CardBody>
     </Card>
   )
 }
