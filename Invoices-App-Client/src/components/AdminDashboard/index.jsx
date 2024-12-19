@@ -19,14 +19,12 @@ export default function AdminDashboard() {
 
   return (
     <>
-      <div className="w-full bg-[#F5F5F5] p-6 rounded-lg max-w-[1366px] flex flex-col justify-center items-center">
+      <div className="w-full max-w-3xl bg-[#F5F5F5] py-2 px-4 rounded-lg flex flex-col justify-center items-center">
         <div className="w-full flex flex-col items-start pb-3">
           <div className="flex flex-row justify-center gap-6">
-            <InvoiceButton onClick={handleOpenForm}>
-              Create invoice
-            </InvoiceButton>
+            <InvoiceButton onClick={handleOpenForm}>Add Invoice</InvoiceButton>
             <InvoiceButton onClick={handleOpenProductForm}>
-              Create product
+              Add Product
             </InvoiceButton>
           </div>
         </div>

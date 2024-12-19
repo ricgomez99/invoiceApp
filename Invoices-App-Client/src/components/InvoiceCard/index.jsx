@@ -1,7 +1,9 @@
-import { Card, CardBody } from '@material-tailwind/react'
-import { memo } from 'react'
+import { memo, useCallback } from 'react'
 import useUsers from '../../hooks/useUsers'
 import { useNavigate } from 'react-router-dom'
+import { FaEdit } from 'react-icons/fa'
+import { FaTrash } from 'react-icons/fa6'
+import useDeleteInvoice from '../../hooks/useDeleteInvoice'
 
 export default memo(function InvoiceCard({
   id,
@@ -13,18 +15,23 @@ export default memo(function InvoiceCard({
 }) {
   const invoiceId = id?.replaceAll('-', ' ').split(' ')[0]
   const dateFormated = date?.replaceAll('-', '/').split('T')[0]
-  const spanStyles = 'font-semibold text-sm text-[#1E201E] min-w-16'
+  const spanStyles = 'font-lato font-semibold text-sm text-[#1E201E] min-w-16'
   const goTo = useNavigate()
+  const { deleteElement } = useDeleteInvoice()
 
   const { users } = useUsers()
   const user = users && users.find((user) => user.id === userId)
 
   const handleInvoiceDetail = (id) => goTo(`/invoice-details/${id}`)
+  const handleInvoiceDelete = useCallback(
+    (id) => deleteElement(id),
+    [deleteElement]
+  )
 
   return (
     <>
-      <Card className="w-full rounded-xl bg-[#2e4a5d] bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-10 border-1 border-gray-300">
-        <CardBody className="w-full items-center flex flex-row justify-between text-center">
+      <div className="w-full rounded-lg py-2 px-6 bg-blue-gray-400/30 border-1 border-gray-300">
+        <div className="w-full items-center flex flex-row justify-center gap-5 text-center">
           <span onClick={() => handleInvoiceDetail(id)} className={spanStyles}>
             {invoiceId}
           </span>
@@ -33,8 +40,10 @@ export default memo(function InvoiceCard({
           <span className={spanStyles}>{subtotal}</span>
           <span className={spanStyles}>{discount}</span>
           <span className={spanStyles}>{total}</span>
-        </CardBody>
-      </Card>
+          <FaEdit />
+          <FaTrash onClick={() => handleInvoiceDelete(id)} />
+        </div>
+      </div>
     </>
   )
 })
