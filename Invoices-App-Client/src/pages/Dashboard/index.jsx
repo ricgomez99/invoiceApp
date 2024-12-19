@@ -7,9 +7,9 @@ export default function Dashboard() {
   const { getUserRole } = useAuth()
   const userRole = getUserRole()
   return (
-    <section className="flex flex-col w-full h-[100vh]">
+    <section className="flex flex-col w-full">
       <DashboardBar />
-      <div className="flex flex-col w-full h-full justify-center items-center">
+      <div className="flex flex-col w-full justify-center items-center lg:mt-10">
         {userRole === 'admin' ? <AdminDashboard /> : <ClientDashboard />}
       </div>
     </section>

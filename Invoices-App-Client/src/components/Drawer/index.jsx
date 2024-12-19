@@ -35,7 +35,7 @@ export default function Drawer({
         </motion.div>
         {isOpen && (
           <div
-            className={`bg-[#00000080] transition-opacity duration-1000 ease-linear w-full h-full top-0 left-0 fixed z-[999] ${
+            className={`bg-[#00000080] transition-all duration-300 ease-in-out w-full h-full top-0 left-0 fixed z-[999] ${
               isOpen ? 'opacity-100' : 'opacity-0'
             }`}
             onClick={onClose}

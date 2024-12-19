@@ -1,18 +1,19 @@
 import { useAuth } from './useAuth'
 import { deleteInvoice } from '../utils/invoices'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 
 export default function useDeleteInvoice() {
   const { getAccessToken } = useAuth()
   const authToken = getAccessToken()
+  const queryClient = useQueryClient()
 
-  const deleteElement = async (id) => {
-    try {
-      const deleted = await deleteInvoice({ id, authToken })
-      if (!deleted) return null
-    } catch (error) {
-      console.log(error)
-    }
-  }
+  const { mutateAsync: deleteElement } = useMutation({
+    mutationFn: async (id) => {
+      return await deleteInvoice({ id, authToken })
+    },
 
-  return deleteElement
+    onSuccess: () => queryClient.invalidateQueries(['invoices']),
+  })
+
+  return { deleteElement }
 }
