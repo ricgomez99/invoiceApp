@@ -4,6 +4,8 @@ import { useNavigate } from 'react-router-dom'
 import { FaEdit } from 'react-icons/fa'
 import { FaTrash } from 'react-icons/fa6'
 import useDeleteInvoice from '../../hooks/useDeleteInvoice'
+import { useMediaQuery } from 'react-responsive'
+import MobileInvoiceCard from '../Mobile/MobileInvoiceCard'
 
 export default memo(function InvoiceCard({
   id,
@@ -15,7 +17,8 @@ export default memo(function InvoiceCard({
 }) {
   const invoiceId = id?.replaceAll('-', ' ').split(' ')[0]
   const dateFormated = date?.replaceAll('-', '/').split('T')[0]
-  const spanStyles = 'font-lato font-semibold text-sm text-[#1E201E] min-w-16'
+  const spanStyles =
+    'font-lato font-semibold text-sm text-[#1E201E] lg:min-w-16'
   const goTo = useNavigate()
   const { deleteElement } = useDeleteInvoice()
 
@@ -28,22 +31,38 @@ export default memo(function InvoiceCard({
     [deleteElement]
   )
 
+  const minWidth = useMediaQuery({ maxWidth: 954 })
+
   return (
     <>
-      <div className="w-full rounded-lg py-2 px-6 bg-blue-gray-400/30 border-1 border-gray-300">
-        <div className="w-full items-center flex flex-row justify-center gap-5 text-center">
-          <span onClick={() => handleInvoiceDetail(id)} className={spanStyles}>
-            {invoiceId}
-          </span>
-          <span className={spanStyles}>{user?.name}</span>
-          <span className={spanStyles}>{dateFormated}</span>
-          <span className={spanStyles}>{subtotal}</span>
-          <span className={spanStyles}>{discount}</span>
-          <span className={spanStyles}>{total}</span>
-          <FaEdit />
-          <FaTrash onClick={() => handleInvoiceDelete(id)} />
+      {minWidth ? (
+        <MobileInvoiceCard
+          id={invoiceId}
+          date={dateFormated}
+          subtotal={subtotal}
+          discount={discount}
+          total={total}
+          user={user?.name}
+        />
+      ) : (
+        <div className="w-full rounded-lg py-2 px-6 bg-blue-gray-400/30 border-1 border-gray-300">
+          <div className="w-full items-center flex flex-row justify-center gap-5 text-center">
+            <span
+              onClick={() => handleInvoiceDetail(id)}
+              className={spanStyles}
+            >
+              {invoiceId}
+            </span>
+            <span className={spanStyles}>{user?.name}</span>
+            <span className={spanStyles}>{dateFormated}</span>
+            <span className={spanStyles}>{subtotal}</span>
+            <span className={spanStyles}>{discount}</span>
+            <span className={spanStyles}>{total}</span>
+            <FaEdit />
+            <FaTrash onClick={() => handleInvoiceDelete(id)} />
+          </div>
         </div>
-      </div>
+      )}
     </>
   )
 })
